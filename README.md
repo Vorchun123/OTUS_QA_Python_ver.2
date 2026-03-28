@@ -1,0 +1,1 @@
+# OTUS_QA_Python_ver.2
