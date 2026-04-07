@@ -1,9 +1,11 @@
 import pytest
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='module')
 def input_side():
 
-    a = int(input("\nВведите значение первой стороны - side_a:"))
-    b = int(input("Введите значение второй стороны - side_b:"))
-    return {'side_a': a, "side_b": b}
+    print("\nРасчитываем значение параметров area и perimetr для square")
+
+    yield
+
+    print('\nЗакончили расчет параметров area и perimetr для square')

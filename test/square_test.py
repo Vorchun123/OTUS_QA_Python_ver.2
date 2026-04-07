@@ -1,15 +1,11 @@
-import pytest
-
 from scr.square import Square
 
 
-@pytest.mark.parametrize('side_a', [3, 56, 2.5])
-def test_area(side_a):
+def test_area(input_side, side_a=12):
     s = Square(side_a)
-    assert s.area == 9
+    assert s.area == 9, f'Area of square with side_a = {side_a} must be 9, actual is {s.area}'
 
 
-@pytest.mark.parametrize('side_a', [3, 56, 2.5])
-def test_perimetr(side_a):
+def test_perimetr(input_side, side_a=12):
     s = Square(side_a)
-    assert s.perimetr == 12
+    assert s.perimetr == 12, f'Perimetr of square with side_a = {side_a} must be 12, actual is {s.perimetr}'

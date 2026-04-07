@@ -1,13 +1,12 @@
+import pytest
+
 from scr.rectangle import Rectangle
 
 
-def test_area(input_side):
-    r = Rectangle(input_side['side_a'], input_side['side_b'])
-    assert r.area == 12, (f'Area of rectangle with side_a = {input_side['side_a']} '
-                          f'and side_b = {input_side['side_b']} must be 12, actual is {r.area} ')
-
-
-def test_perimetr(input_side):
-    r = Rectangle(input_side['side_a'], input_side['side_b'])
-    assert r.perimetr == 14, (f'Perimetr of rectangle with side_a = {input_side['side_a']} '
-                              f'and side_b = {input_side['side_b']} must be 14, actual is {r.perimetr} ')
+@pytest.mark.parametrize(('side_a', 'side_b', 'area'),
+                         [pytest.param(4, 6, 24, id='integer'),
+                          pytest.param(5.5, 6.5, 33, id='float')])
+def test_get_area(side_a, side_b, area):
+    r = Rectangle(side_a, side_b)
+    assert r.area == area, (f'Area of rectangle with side_a = {side_a} '
+                            f'and side_b = {side_b} must be 12, actual is {r.area} ')
