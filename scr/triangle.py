@@ -3,7 +3,7 @@ import math
 
 
 class Triangle(Figure):
-    def __init__(self, side_a: float, side_b: float, side_c: float):
+    def __init__(self, side_a, side_b, side_c):
         if side_a <= 0 or side_b <= 0 or side_c <= 0:
             raise ValueError(
                 f"side_a, side_b, side_c must be above zero now side_a = {side_a}, side_b = {side_b}, side_c = {side_c}"
