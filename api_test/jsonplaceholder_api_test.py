@@ -36,22 +36,22 @@ def test_check_albums_of_user(user_id, count, album_index, title):
 
 def test_post_users():
     new_url = f'{URL}/posts'
-    body = {'title': 'OTUS', 'body': 'test post api', 'userId': 1}
+    body = {'title': 'OTUS', 'body': 'pytest_test post api', 'userId': 1}
     response = requests.post(new_url, data=body)
     result_json = response.json()
     assert response.status_code == 201
     assert result_json.get('title') == 'OTUS'
-    assert result_json.get('body') == 'test post api'
+    assert result_json.get('body') == 'pytest_test post api'
 
 
 def test_put_users():
     new_url = f'{URL}/posts/1'
-    body = {'id': 1, 'title': 'new_OTUS', 'body': 'test put api', 'userId': 1}
+    body = {'id': 1, 'title': 'new_OTUS', 'body': 'pytest_test put api', 'userId': 1}
     response = requests.put(new_url, data=body)
     result_json = response.json()
     assert response.status_code == 200
     assert result_json.get('title') == 'new_OTUS'
-    assert result_json.get('body') == 'test put api'
+    assert result_json.get('body') == 'pytest_test put api'
 
 
 def test_delete_users():
