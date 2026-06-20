@@ -23,6 +23,7 @@ def browser(request):
     else:
         raise ValueError(f'Browser {browser_name} is not supported')
     driver.get(base_url)
+    driver.set_window_size(1920, 1080)
     yield driver
 
     driver.quit()
