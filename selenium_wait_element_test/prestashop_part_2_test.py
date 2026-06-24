@@ -28,7 +28,6 @@ def test_check_element_in_catalog(browser):
     all_product.click()
     (WebDriverWait(browser, 2).until
      (EC.visibility_of_element_located((By.ID, "js-product-list-header"))))
-
     chapter_home = browser.find_element(By.CSS_SELECTOR, '[class = "left-block__title-link"]')
     count_of_subsections = browser.find_elements(By.CSS_SELECTOR, '[class = "category-tree__list"]')
     filter_list = browser.find_elements(By.XPATH, '//*[@id="search-filters"]/div/section')
@@ -104,5 +103,3 @@ def test_check_element_on_page_of_register(browser):
         "Button 'Create account' is not blue"
     assert len(sections_to_fill) == 10
     assert section_first_name.text.strip() == 'First name', "Name of section is not correct"
-
-
