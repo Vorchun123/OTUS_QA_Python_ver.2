@@ -1,7 +1,5 @@
 from page_object_test.page.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class AdminSignInPage(BasePage):
@@ -11,11 +9,12 @@ class AdminSignInPage(BasePage):
     LOG_IN_BUTTON = (By.ID, 'submit_login')
 
     def load_page(self):
-        self.browser.get(self.URL)
+        self.local_log('Open "Sign in" page')
+        self.visit_page(self.URL)
 
     def sign_in(self, email, password):
+        self.local_log('Input email and password for sign in')
         self.send_keys(*self.EMAIL_INPUT, text=email)
         self.send_keys(*self.PASSWORD_INPUT, text=password)
         self.click(*self.LOG_IN_BUTTON)
-        WebDriverWait(self.browser, 5).until(
-            EC.invisibility_of_element_located(self.LOG_IN_BUTTON))
+        self.wait(5, self.LOG_IN_BUTTON)

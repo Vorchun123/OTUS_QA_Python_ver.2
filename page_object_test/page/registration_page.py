@@ -21,24 +21,31 @@ class RegistrationPage(BasePage):
     SECTION_NAME = (By.CSS_SELECTOR, '[class="breadcrumb"]')
 
     def load_page(self):
-        self.browser.get(self.URL)
+        self.local_log('Open "Registration" page')
+        self.visit_page(self.URL)
 
     def name_page(self):
+        self.local_log('Return name page')
         return self.get_text(*self.NAME_PAGE)
 
     def clickable_button_create_account(self):
+        self.local_log('Check that button "Create account" is clickable')
         return self.element_is_clickable(*self.BUTTON_CREATE_ACCOUNT)
 
     def color_button_create_account(self):
+        self.local_log('Return color button "Create account"')
         return self.get_color(*self.BUTTON_CREATE_ACCOUNT)
 
     def count_section_to_filters(self):
+        self.local_log('Return count section to filters')
         return len(self.find_elements(*self.SECTIONS_TO_FILTERS))
 
     def name_section(self):
+        self.local_log('Return name section')
         return self.get_text(*self.SECTION_FIRST_NAME)
 
     def create_new_account(self, social_title, firstname, lastname, email, password, birthday):
+        self.local_log('Create new account')
         if social_title == 'm':
             self.click(*self.SOCIAL_TITLE_M)
         else:

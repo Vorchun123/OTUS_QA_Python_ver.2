@@ -1,0 +1,12 @@
+[32mINFO    [0m test_add_new_product_on_admin:conftest.py:25 ==> Test start at 2026-06-28 11:49:46.830725
+[32mINFO    [0m test_add_new_product_on_admin:conftest.py:45 Browser chrome started
+[32mINFO    [0m test_add_new_product_on_admin:admin_sign_in_page.py:12 AdminSignInPage: Open "Sign in" page
+[32mINFO    [0m test_add_new_product_on_admin:base_page.py:13 AdminSignInPage: Opening url: http://localhost:8081/administration/login
+[32mINFO    [0m test_add_new_product_on_admin:admin_sign_in_page.py:16 AdminSignInPage: Input email and password for sign in
+[32mINFO    [0m test_add_new_product_on_admin:base_page.py:29 AdminSignInPage: Input field: ('id', 'email') , Input text: admin@example.com
+[32mINFO    [0m test_add_new_product_on_admin:base_page.py:29 AdminSignInPage: Input field: ('id', 'passwd') , Input text: Admin123!
+[32mINFO    [0m test_add_new_product_on_admin:admin_catalog_page.py:27 AdminCatalogPage: Open "Catalog" page
+[32mINFO    [0m test_add_new_product_on_admin:base_page.py:13 AdminCatalogPage: Opening url: http://localhost:8081/administration/sell/catalog/products/
+[32mINFO    [0m test_add_new_product_on_admin:admin_catalog_page.py:32 AdminCatalogPage: Add new product
+[32mINFO    [0m test_add_new_product_on_admin:base_page.py:29 AdminCatalogPage: Input field: ('id', 'product_header_name_1') , Input text: New_product
+[32mINFO    [0m test_add_new_product_on_admin:conftest.py:50 ==> Test finished at 2026-06-28 11:49:56.421632

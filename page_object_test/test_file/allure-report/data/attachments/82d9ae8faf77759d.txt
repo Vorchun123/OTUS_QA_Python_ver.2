@@ -1,0 +1,10 @@
+[32mINFO    [0m test_check_element_on_sign_in:conftest.py:25 ==> Test start at 2026-06-28 11:49:05.058489
+[32mINFO    [0m test_check_element_on_sign_in:conftest.py:45 Browser chrome started
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:15 SignInPage: Open "Sign in" page
+[32mINFO    [0m test_check_element_on_sign_in:base_page.py:13 SignInPage: Opening url: http://localhost:8081/login?back=http%3A%2F%2Flocalhost%3A8081%2F
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:29 SignInPage: Return name page
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:37 SignInPage: Return color button "Sign in"
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:41 SignInPage: Check that button "Sign in" is clickable
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:33 SignInPage: Return name button "Create  account"
+[32mINFO    [0m test_check_element_on_sign_in:sign_in_page.py:45 SignInPage: Check that button "Forgot password" is visible
+[32mINFO    [0m test_check_element_on_sign_in:conftest.py:50 ==> Test finished at 2026-06-28 11:49:08.623232

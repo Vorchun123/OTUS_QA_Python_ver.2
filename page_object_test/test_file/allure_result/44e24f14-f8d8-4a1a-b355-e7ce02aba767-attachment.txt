@@ -1,0 +1,10 @@
+[32mINFO    [0m test_check_element_on_page_of_register:conftest.py:25 ==> Test start at 2026-06-27 22:32:39.943306
+[32mINFO    [0m test_check_element_on_page_of_register:conftest.py:45 Browser chrome started
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:24 RegistrationPage: Open "Registration" page
+[32mINFO    [0m test_check_element_on_page_of_register:base_page.py:13 RegistrationPage: Opening url: http://localhost:8081/registration
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:28 RegistrationPage: Return name page
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:32 RegistrationPage: Check that button "Create account" is clickable
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:36 RegistrationPage: Return color button "Create account"
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:40 RegistrationPage: Return count section to filters
+[32mINFO    [0m test_check_element_on_page_of_register:registration_page.py:44 RegistrationPage: Return name section
+[32mINFO    [0m test_check_element_on_page_of_register:conftest.py:50 ==> Test finished at 2026-06-27 22:32:43.441315

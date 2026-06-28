@@ -7,7 +7,9 @@ class CartPage(BasePage):
     PRODUCT_NAME_ON_CART_PAGE = (By.CSS_SELECTOR, '[class = "product-line__title"]')
 
     def load_page(self):
-        self.browser.get(self.URL)
+        self.local_log('Open "Cart" page')
+        self.visit_page(self.URL)
 
     def product_name_on_cart_page(self):
+        self.local_log('Return product name')
         return self.get_text(*self.PRODUCT_NAME_ON_CART_PAGE)

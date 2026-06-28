@@ -10,21 +10,27 @@ class ProductPage(BasePage):
     SHARE_ELEMENTS = (By.CSS_SELECTOR, '[class="ps-sharebuttons__list"] >*')
 
     def load_page(self):
-        self.browser.get(self.URL)
+        self.local_log('Open "Product" page')
+        self.visit_page(self.URL)
 
     def visible_button_add_to_cart(self):
+        self.local_log('Check that button "Add to cart" is visible')
         return self.element_is_visible(*self.BUTTON_ADD_TO_CART)
 
     def color_button_add_to_cart(self):
+        self.local_log('Return color button "Add to cart"')
         return self.get_color(*self.BUTTON_ADD_TO_CART)
 
     def price_product(self):
+        self.local_log('Return product price')
         return self.get_text(*self.PRODUCT_PRICE)
 
     def name_product(self):
+        self.local_log('Return name product')
         return self.get_text(*self.PRODUCT_NAME)
 
     def count_share_elements(self):
+        self.local_log('Return count share elements')
         return len(self.find_elements(*self.SHARE_ELEMENTS))
 
 
