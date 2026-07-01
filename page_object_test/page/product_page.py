@@ -1,5 +1,6 @@
 from page_object_test.page.base_page import BasePage
 from selenium.webdriver.common.by import By
+import allure
 
 
 class ProductPage(BasePage):
@@ -10,27 +11,24 @@ class ProductPage(BasePage):
     SHARE_ELEMENTS = (By.CSS_SELECTOR, '[class="ps-sharebuttons__list"] >*')
 
     def load_page(self):
-        self.local_log('Open "Product" page')
         self.visit_page(self.URL)
 
+    @allure.step("Проверяем цвет кнопки 'Add to cart'")
+    def checking_color_button_add_to_cart(self):
+        self.checking_color_element(*self.BUTTON_ADD_TO_CART, expected_value='rgba(11, 105, 246, 1)')
+
+    @allure.step("Проверяем наименование продукта")
+    def checking_name_product(self):
+        self.checking_text_element(*self.PRODUCT_NAME, expected_value="The best is yet to come' Framed poster")
+
+    @allure.step("Проверяем видимость кнопки 'Add to cart'")
     def visible_button_add_to_cart(self):
-        self.local_log('Check that button "Add to cart" is visible')
-        return self.element_is_visible(*self.BUTTON_ADD_TO_CART)
+        assert self.element_is_visible(*self.BUTTON_ADD_TO_CART), f"Button 'Contact us' is not visible"
 
-    def color_button_add_to_cart(self):
-        self.local_log('Return color button "Add to cart"')
-        return self.get_color(*self.BUTTON_ADD_TO_CART)
+    @allure.step("Проверяем стоимость продукта")
+    def checking_price_product(self):
+        self.checking_text_element(*self.PRODUCT_PRICE, expected_value="Price:\n€29.00")
 
-    def price_product(self):
-        self.local_log('Return product price')
-        return self.get_text(*self.PRODUCT_PRICE)
-
-    def name_product(self):
-        self.local_log('Return name product')
-        return self.get_text(*self.PRODUCT_NAME)
-
-    def count_share_elements(self):
-        self.local_log('Return count share elements')
-        return len(self.find_elements(*self.SHARE_ELEMENTS))
-
-
+    @allure.step("Проверяем количество возможностей чтобы поделиться")
+    def checking_count_share_elements(self):
+        self.checking_count_element(*self.SHARE_ELEMENTS, expected_value=3)

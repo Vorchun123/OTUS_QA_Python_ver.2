@@ -1,7 +1,6 @@
 from page_object_test.page.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import allure
 
 
 class AdminCatalogPage(BasePage):
@@ -23,13 +22,13 @@ class AdminCatalogPage(BasePage):
     BUTTON_DELETE = (By.CSS_SELECTOR, '[data-confirm-button-label="Delete"]')
     BUTTON_CONFIRM_DELETE = (By.CSS_SELECTOR, '.btn-confirm-submit')
 
+    @allure.step('Переходим на страницу "Admin-Catalog"')
     def load_page(self):
-        self.logger.info(f'{self.class_name}: Open "Catalog" page')
         self.visit_page(self.URL)
         self.click(*self.WARNING_BUTTON)
 
+    @allure.step("Вводим данные продукта")
     def add_new_product(self, product_name, retail_price, wholesale_price):
-        self.logger.info(f'{self.class_name}: Add new product')
         self.click(*self.ADD_PRODUCT_BUTTON)
         iframes = self.browser.find_elements(By.TAG_NAME, 'iframe')
         if iframes:
@@ -38,19 +37,27 @@ class AdminCatalogPage(BasePage):
         self.click(*self.STANDARD_PRODUCT_BUTTON)
         self.click(*self.ADD_NEW_PRODUCT_BUTTON)
         self.wait(10, self.MODAL_WINDOWS_ADD_PRODUCT)
-        self.send_keys(*self.PRODUCT_NAME_INPUT, text=product_name)
+        with allure.step("Вводим наименование продукта"):
+            self.send_keys(*self.PRODUCT_NAME_INPUT, text=product_name)
         self.click(*self.PRODUCT_PRICE_NAV_BUTTON)
-        self.send_keys(*self.PRODUCT_RETAIL_PRICE_INPUT, text=retail_price)
-        self.send_keys(*self.PRODUCT_COST_PRICE_INPUT, text=wholesale_price)
+        with allure.step("Вводим розничную цену продукта"):
+            self.send_keys(*self.PRODUCT_RETAIL_PRICE_INPUT, text=retail_price)
+        with allure.step("Вводим себестоимость продукта"):
+            self.send_keys(*self.PRODUCT_COST_PRICE_INPUT, text=wholesale_price)
         self.click(*self.SAVE_BUTTON)
 
+    @allure.step("Удаляем продукт")
     def delete_product(self):
-        self.local_log('Delete product')
         self.click(*self.BUTTON_AFTER)
         self.click(*self.BUTTON_DELETE)
         self.wait_visible(10, self.MODAL_WINDOWS)
         self.click(*self.BUTTON_CONFIRM_DELETE)
 
-    def get_status(self):
-        self.local_log('Return status')
-        return self.get_text(*self.STATUS)
+    @allure.step("Проверяем что продукт успешно создан")
+    def get_successful_update_status(self):
+        self.checking_text_element(*self.STATUS, expected_value='Successful update')
+
+    @allure.step("Проверяем что продукт успешно удален")
+    def get_successful_deletion_status(self):
+        self.checking_text_element(*self.STATUS, expected_value='Successful deletion')
+

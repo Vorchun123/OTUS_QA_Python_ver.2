@@ -1,5 +1,6 @@
 from page_object_test.page.base_page import BasePage
 from selenium.webdriver.common.by import By
+import allure
 
 
 class CartPage(BasePage):
@@ -7,9 +8,9 @@ class CartPage(BasePage):
     PRODUCT_NAME_ON_CART_PAGE = (By.CSS_SELECTOR, '[class = "product-line__title"]')
 
     def load_page(self):
-        self.local_log('Open "Cart" page')
         self.visit_page(self.URL)
 
-    def product_name_on_cart_page(self):
-        self.local_log('Return product name')
-        return self.get_text(*self.PRODUCT_NAME_ON_CART_PAGE)
+    @allure.step("Проверяем наименование продукта в корзине")
+    def checking_product_name_in_cart(self, name_on_main):
+        self.checking_text_element(*self.PRODUCT_NAME_ON_CART_PAGE, expected_value=name_on_main)
+
