@@ -1,0 +1,33 @@
+[32mINFO    [0m test_add_to_cart:conftest.py:25 ==> Test start at 2026-06-28 13:02:06.959478
+[32mINFO    [0m test_add_to_cart:conftest.py:45 Browser chrome started
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Open "Main" page
+[32mINFO    [0m test_add_to_cart:base_page.py:16 MainPage: Opening url: http://localhost:8081
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Return product name
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Scroll to button "Add to cart"
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Add to cart
+[32mINFO    [0m test_add_to_cart:base_page.py:13 CartPage: Open "Cart" page
+[32mINFO    [0m test_add_to_cart:base_page.py:16 CartPage: Opening url: http://localhost:8081/cart?action=show
+[32mINFO    [0m test_add_to_cart:base_page.py:13 CartPage: Return product name
+[31m[1mERROR   [0m test_add_to_cart:base_page.py:24 Error finding element: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[class = "product-line__title"]"}
+  (Session info: chrome=149.0.7827.199); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff7d6113fa5+14925]
+	chromedriver!GetHandleVerifier [0x7ff7d6114000+14980]
+	chromedriver!(No symbol) [0x7ff7d5c5793d]
+	chromedriver!(No symbol) [0x7ff7d5cb1aad]
+	chromedriver!(No symbol) [0x7ff7d5cb1dac]
+	chromedriver!(No symbol) [0x7ff7d5d027d7]
+	chromedriver!(No symbol) [0x7ff7d5cff39b]
+	chromedriver!(No symbol) [0x7ff7d5ca401c]
+	chromedriver!(No symbol) [0x7ff7d5ca4f43]
+	chromedriver!GetHandleVerifier [0x7ff7d66f7591+5f7f11]
+	chromedriver!GetHandleVerifier [0x7ff7d66f1902+5f2282]
+	chromedriver!GetHandleVerifier [0x7ff7d6717115+617a95]
+	chromedriver!GetHandleVerifier [0x7ff7d6131dce+3274e]
+	chromedriver!GetHandleVerifier [0x7ff7d613a82c+3b1ac]
+	chromedriver!GetHandleVerifier [0x7ff7d611d744+1e0c4]
+	chromedriver!GetHandleVerifier [0x7ff7d611d8d4+1e254]
+	chromedriver!GetHandleVerifier [0x7ff7d6101447+1dc7]
+	KERNEL32!BaseThreadInitThunk [0x7fff96397374+14]
+	ntdll!RtlUserThreadStart [0x7fff9733cc91+21]
+[32mINFO    [0m test_add_to_cart:conftest.py:50 ==> Test finished at 2026-06-28 13:02:14.316368

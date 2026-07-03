@@ -1,0 +1,11 @@
+[32mINFO    [0m test_add_to_cart:conftest.py:25 ==> Test start at 2026-06-28 12:27:41.257416
+[32mINFO    [0m test_add_to_cart:conftest.py:45 Browser chrome started
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Open "Main" page
+[32mINFO    [0m test_add_to_cart:base_page.py:16 MainPage: Opening url: http://localhost:8081
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Return product name
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Scroll to button "Add to cart"
+[32mINFO    [0m test_add_to_cart:base_page.py:13 MainPage: Add to cart
+[32mINFO    [0m test_add_to_cart:base_page.py:13 CartPage: Open "Cart" page
+[32mINFO    [0m test_add_to_cart:base_page.py:16 CartPage: Opening url: http://localhost:8081/cart?action=show
+[32mINFO    [0m test_add_to_cart:base_page.py:13 CartPage: Return product name
+[32mINFO    [0m test_add_to_cart:conftest.py:50 ==> Test finished at 2026-06-28 12:27:48.304437

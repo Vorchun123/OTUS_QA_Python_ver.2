@@ -1,5 +1,6 @@
 from page_object_test.page.base_page import BasePage
 from selenium.webdriver.common.by import By
+import allure
 
 
 class CatalogPage(BasePage):
@@ -12,23 +13,30 @@ class CatalogPage(BasePage):
     COUNT_SUBSECTION = (By.CSS_SELECTOR, '[class="category-tree__list"]')
     FILTER_LIST = (By.CSS_SELECTOR, '[class="accordion-item"]')
 
+    @allure.step('Переходим на страницу "Catalog"')
     def load_page(self):
-        self.browser.get(self.URL)
+        self.visit_page(self.URL)
 
-    def price_product(self):
-        return self.get_text(*self.PRICE_PRODUCT)
+    @allure.step("Проверяем что цена изменилась")
+    def checking_change_price(self, price_euro):
+        self.checking_text_element_not_equal(*self.PRICE_PRODUCT, expected_value=price_euro)
 
-    def name_chapter_home(self):
-        return self.get_text(*self.CHAPTER_HOME_LINK)
+    @allure.step("Проверяем наименование кнопки 'Home'")
+    def checking_name_button_home(self):
+        self.checking_text_element(*self.CHAPTER_HOME_LINK, expected_value='Home')
 
-    def name_button_clothes(self):
-        return self.get_text(*self.BUTTON_CLOTHES)
+    @allure.step("Проверяем наименование кнопки 'Clothes'")
+    def checking_name_button_clothes(self):
+        self.checking_text_element(*self.BUTTON_CLOTHES, expected_value='Clothes')
 
-    def color_button_subscribe(self):
-        return self.get_color(*self.BUTTON_SUBSCRIBE)
+    @allure.step("Проверяем цвет кнопки 'Subscribe'")
+    def checking_color_button_subscribe(self):
+        self.checking_color_element(*self.BUTTON_SUBSCRIBE, expected_value='rgba(11, 105, 246, 1)')
 
-    def count_of_subsection(self):
-        return len(self.find_elements(*self.COUNT_SUBSECTION))
+    @allure.step("Проверяем количество подразделов")
+    def checking_count_subsection(self):
+        self.checking_count_element(*self.COUNT_SUBSECTION, expected_value=3)
 
-    def count_of_element_in_filter_list(self):
-        return len(self.find_elements(*self.FILTER_LIST))
+    @allure.step("Проверяем количество элементов фильтрации")
+    def checking_count_filter_list(self):
+        self.checking_count_element(*self.FILTER_LIST, expected_value=11)
