@@ -1,8 +1,0 @@
-[32mINFO    [0m test_change_price_in_catalog:conftest.py:25 ==> Test start at 2026-06-28 12:27:52.103132
-[32mINFO    [0m test_change_price_in_catalog:conftest.py:45 Browser chrome started
-[32mINFO    [0m test_change_price_in_catalog:base_page.py:13 MainPage: Return product price
-[32mINFO    [0m test_change_price_in_catalog:base_page.py:13 MainPage: Change price
-[32mINFO    [0m test_change_price_in_catalog:base_page.py:13 CatalogPage: Open "Catalog" page
-[32mINFO    [0m test_change_price_in_catalog:base_page.py:16 CatalogPage: Opening url: http://localhost:8081/2-home
-[32mINFO    [0m test_change_price_in_catalog:base_page.py:13 CatalogPage: Return price product
-[32mINFO    [0m test_change_price_in_catalog:conftest.py:50 ==> Test finished at 2026-06-28 12:27:56.111858
