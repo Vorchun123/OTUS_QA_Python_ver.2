@@ -1,6 +1,0 @@
-[32mINFO    [0m test_change_price_on_main_page:conftest.py:25 ==> Test start at 2026-06-28 13:02:14.320562
-[32mINFO    [0m test_change_price_on_main_page:conftest.py:45 Browser chrome started
-[32mINFO    [0m test_change_price_on_main_page:base_page.py:13 MainPage: Return product price
-[32mINFO    [0m test_change_price_on_main_page:base_page.py:13 MainPage: Change price
-[32mINFO    [0m test_change_price_on_main_page:base_page.py:13 MainPage: Return product price
-[32mINFO    [0m test_change_price_on_main_page:conftest.py:50 ==> Test finished at 2026-06-28 13:02:18.042408

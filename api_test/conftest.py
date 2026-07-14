@@ -3,7 +3,7 @@ import pytest
 
 def pytest_addoption(parser):
     parser.addoption(
-        '--url',
+        '--url_api',
         default="https://ya.ru"
     )
     parser.addoption(

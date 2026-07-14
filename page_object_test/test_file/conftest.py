@@ -3,18 +3,23 @@ import pytest
 import logging
 from selenium import webdriver
 from pathlib import Path
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome')
     parser.addoption('--url', default='http://localhost:8081/')
+    parser.addoption('--headless', action='store_true', default=False)
     parser.addoption('--log_level', default="INFO")
 
 
 @pytest.fixture()
 def browser(request):
     browser_name = request.config.getoption('browser')
-    log_level = request.config.getoption('--log_level')
+    log_level = request.config.getoption('log_level')
+    headless = request.config.getoption('headless')
     base_url = request.config.getoption('url')
 
     logger = logging.getLogger(request.node.name)
@@ -32,12 +37,28 @@ def browser(request):
 
     driver = None
 
+    chrom_options = ChromeOptions()
+    edge_options = EdgeOptions()
+    firefox_options = FirefoxOptions()
+
     if browser_name == 'chrome':
-        driver = webdriver.Chrome()
+        chrom_options.add_argument('--no-sandbox')
+        chrom_options.add_argument('--disable-dev-shm-usage')
+        if headless:
+            chrom_options.add_argument('headless')
+        driver = webdriver.Chrome(options=chrom_options)
     elif browser_name == 'edge':
-        driver = webdriver.Edge()
+        edge_options.add_argument('--no-sandbox')
+        edge_options.add_argument('--disable-dev-shm-usage')
+        if headless:
+            edge_options.add_argument('headless')
+        driver = webdriver.Edge(options=edge_options)
     elif browser_name == 'firefox':
-        driver = webdriver.Firefox()
+        firefox_options.add_argument('--no-sandbox')
+        firefox_options.add_argument('--disable-dev-shm-usage')
+        if headless:
+            firefox_options.add_argument('headless')
+        driver = webdriver.Firefox(options=firefox_options)
     else:
         raise ValueError(f'Browser {browser_name} is not supported')
 
