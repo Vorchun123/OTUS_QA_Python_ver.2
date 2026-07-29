@@ -10,7 +10,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome')
-    parser.addoption('--url', default='http://localhost:8081/')
+    parser.addoption('--url', default='http://192.168.10.247:8081/')
     parser.addoption('--headless', action='store_true', default=False)
     parser.addoption('--log_level', default="INFO")
 

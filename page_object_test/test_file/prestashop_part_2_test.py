@@ -1,4 +1,5 @@
 from page_object_test.page.main_page import MainPage
+from page_object_test.page.product_page import ProductPage
 from page_object_test.page.cart_page import CartPage
 from page_object_test.page.catalog_page import CatalogPage
 from page_object_test.page.sign_in_page import SignInPage
@@ -31,9 +32,10 @@ def test_add_to_cart(browser):
     main_page = MainPage(browser)
     main_page.load_page()
     name_on_main = main_page.product_name_on_main_page()
-    main_page.scroll_to_button_add_to_cart()
-    main_page.add_to_cart()
-    main_page.wait_to_add()
+    main_page.click_on_product()
+    product_page = ProductPage(browser)
+    product_page.add_to_cart()
+    product_page.wait_to_add()
     cart_page = CartPage(browser)
     cart_page.load_page()
     cart_page.checking_product_name_in_cart(name_on_main)

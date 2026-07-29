@@ -4,8 +4,8 @@ import allure
 
 
 class CartPage(BasePage):
-    URL = 'http://localhost:8081/cart?action=show'
-    PRODUCT_NAME_ON_CART_PAGE = (By.CSS_SELECTOR, '[class = "product-line__title"]')
+    URL = 'http://192.168.10.247:8081/cart?action=show'
+    PRODUCT_NAME_ON_CART_PAGE = (By.XPATH, '//*[@id="main"]/div/div[1]/div/div[2]/ul/li/div/div[2]/div[1]/a')
 
     def load_page(self):
         self.visit_page(self.URL)
