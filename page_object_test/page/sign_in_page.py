@@ -4,11 +4,11 @@ import allure
 
 
 class SignInPage(BasePage):
-    URL = 'http://localhost:8081/login?back=http%3A%2F%2Flocalhost%3A8081%2F'
+    URL = 'http://192.168.10.247:8081/login?back=http%3A%2F%2Flocalhost%3A8081%2F'
     NAME_PAGE = (By.CSS_SELECTOR, '[class="page-title-section"]')
     BUTTON_SIGN_IN = (By.ID, 'submit-login')
-    BUTTON_CREATE_ACCOUNT = (By.CSS_SELECTOR, '[class="btn btn-outline-primary"]')
-    BUTTON_FORGOT_PASSWORD = (By.CSS_SELECTOR, '[class="btn btn-basic"]')
+    BUTTON_CREATE_ACCOUNT = (By.CSS_SELECTOR, '[data-link-action="display-register-form"]')
+    BUTTON_FORGOT_PASSWORD = (By.CSS_SELECTOR, '[class="forgot-password"]')
     EMAIL_INPUT = (By.ID, 'field-email')
     PASSWORD_INPUT = (By.ID, 'field-password')
 
@@ -28,15 +28,15 @@ class SignInPage(BasePage):
 
     @allure.step("Проверяем наименование кнопки 'Sign in'")
     def checking_name_button_sign_in(self):
-        self.checking_text_element(*self.BUTTON_SIGN_IN, expected_value='Sign in')
+        self.checking_text_element(*self.BUTTON_SIGN_IN, expected_value='SIGN IN')
 
     @allure.step("Проверяем наименование кнопки 'Create your account'")
     def checking_name_button_create_your_account(self):
-        self.checking_text_element(*self.BUTTON_CREATE_ACCOUNT, expected_value='Create your account')
+        self.checking_text_element(*self.BUTTON_CREATE_ACCOUNT, expected_value='No account? Create one here')
 
     @allure.step("Проверяем цвет кнопки 'Sign in'")
     def checking_color_button_sign_in(self):
-        self.checking_color_element(*self.BUTTON_SIGN_IN, expected_value='rgba(11, 105, 246, 1)')
+        self.checking_color_element(*self.BUTTON_SIGN_IN, expected_value='rgba(36, 185, 215, 1)')
 
     @allure.step("Проверяем кликабельность кнопки 'Sign in'")
     def clickable_button_sign_in(self):
