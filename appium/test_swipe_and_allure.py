@@ -1,0 +1,48 @@
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pytest
+import allure
+from appium.options.common import AppiumOptions
+from appium.webdriver import webdriver
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+
+options = AppiumOptions()
+options.load_capabilities({
+    "platformName": "Android",
+    "appium:automationName": "uiautomator2",
+    "appium:app": "D:/Учеба/OTUS/Appium_файлы_примеров/pnv.apk"
+})
+
+appium_server_url = 'http://localhost:4723'
+
+
+@pytest.fixture()
+def driver():
+    android_driver = webdriver.Remote(appium_server_url, options=options)
+    yield android_driver
+    android_driver.quit()
+
+
+@allure.tag('functional')
+@allure.title("Swipe to Calendar")
+def test_swipe(driver):
+    while True:
+        with allure.step('Поиск элементов'):
+            elements = driver.find_elements(AppiumBy.ID, 'com.csdroid.pkg:id/tv_title')
+            first_element_before_swipe = elements[0].text if elements else None
+        with allure.step('Swipe 3-х элементов'):
+            driver.swipe(elements[3].rect['x'], elements[3].rect['y'], elements[0].rect['x'], elements[0].rect['y'])
+        elements = driver.find_elements(AppiumBy.ID, 'com.csdroid.pkg:id/tv_title')
+        elements_name = [name.text for name in elements]
+        current_first_element = elements[0].text if elements else None
+        with allure.step('Проверяем наличие Calendar на экране'):
+            if 'Calendarik' in elements_name:
+                with allure.step('Нажимаем на Calendar'):
+                    driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
+                                        value='new UiSelector().text("Calendar")').click()
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, 'android:id/button1')))
+                    driver.find_element(by=AppiumBy.ID, value='android:id/button1').click()
+                    break
+            elif first_element_before_swipe == current_first_element and 'Calendar' not in elements_name:
+                raise Exception('Вы долистали до конца списка, но Calendar не нашли')
