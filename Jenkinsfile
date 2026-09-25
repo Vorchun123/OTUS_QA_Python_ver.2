@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'windows' }
+    agent any
     options {
         timeout(time: 20, unit: 'MINUTES')
     }
@@ -8,7 +8,6 @@ pipeline {
         ADMIN_PASSWD        = credentials('prestashop-admin-password')
         COMPOSE_PROJECT_NAME = "otus-qa-${BUILD_NUMBER}"
         PS_DOMAIN            = "localhost:8081"
-        WORKSPACE_UNIX       = ""
     }
     stages {
         stage('Checkout') {
