@@ -1,11 +1,7 @@
 pipeline {
     agent { label 'windows' }
     options {
-        timeout(time: 60, unit: 'MINUTES')
-        timestamps()
-        ansiColor('xterm')
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-        skipDefaultCheckout(true)
+        timeout(time: 20, unit: 'MINUTES')
     }
     environment {
         MYSQL_ROOT_PASSWORD = credentials('prestashop-mysql-root-password')
