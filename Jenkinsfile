@@ -31,7 +31,7 @@ pipeline {
             steps {
                 dir('docker_selenoid') {
                     bat '''
-                        docker compose -f docker-compose.yml -f docker-compose.ci.yml build tests
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml build tests
                     '''
                 }
             }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 dir('docker_selenoid') {
                     bat '''
-                        docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d ^
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml up -d ^
                             db prestashop prestashop_postinstall ^
                             selenoid1 selenoid2 ggr ggr_ui selenoid_ui nginx
                     '''
@@ -62,7 +62,7 @@ pipeline {
                     bat 'if exist reports rmdir /S /Q reports'
                     bat 'mkdir reports'
                     bat '''
-                        docker compose -f docker-compose.yml -f docker-compose.ci.yml ^
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml ^
                             run --rm tests
                     '''
                 }
@@ -73,7 +73,7 @@ pipeline {
         always {
             dir('docker_selenoid') {
                 bat '''
-                    docker compose -f docker-compose.yml -f docker-compose.ci.yml logs --no-color > reports\\compose.log 2>&1 || exit 0
+                    docker compose -f docker-compose.yaml -f docker-compose.ci.yaml logs --no-color > reports\\compose.log 2>&1 || exit 0
                 '''
             }
             allure includeProperties: false,
@@ -83,7 +83,7 @@ pipeline {
                              allowEmptyArchive: true
             dir('docker_selenoid') {
                 bat '''
-                    docker compose -f docker-compose.yml -f docker-compose.ci.yml down -v --remove-orphans || exit 0
+                    docker compose -f docker-compose.yaml -f docker-compose.ci.yaml down -v --remove-orphans || exit 0
                 '''
             }
         }
