@@ -6,7 +6,6 @@ pipeline {
     environment {
         MYSQL_ROOT_PASSWORD = credentials('prestashop-mysql-root-password')
         ADMIN_PASSWD        = credentials('prestashop-admin-password')
-        COMPOSE_PROJECT_NAME = "otus-qa-${BUILD_NUMBER}"
         PS_DOMAIN            = "localhost:8081"
     }
     stages {
@@ -51,7 +50,7 @@ pipeline {
             steps {
                 dir('docker_selenoid') {
                     bat '''
-                        docker wait %COMPOSE_PROJECT_NAME%_prestashop_postinstall_1
+                        docker wait prestashop_postinstall
                     '''
                 }
             }
