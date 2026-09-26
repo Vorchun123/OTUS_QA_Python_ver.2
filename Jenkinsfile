@@ -4,9 +4,10 @@ pipeline {
         timeout(time: 20, unit: 'MINUTES')
     }
     environment {
-        MYSQL_ROOT_PASSWORD = credentials('prestashop-mysql-root-password')
-        ADMIN_PASSWD        = credentials('prestashop-admin-password')
-        PS_DOMAIN            = "localhost:8081"
+    MYSQL_ROOT_PASSWORD  = credentials('prestashop-mysql-root-password')
+    ADMIN_PASSWD         = credentials('prestashop-admin-password')
+    COMPOSE_PROJECT_NAME = "otus-qa-${BUILD_NUMBER}"
+    PS_DOMAIN            = "localhost:8081"
     }
     stages {
         stage('Checkout') {
@@ -50,7 +51,8 @@ pipeline {
             steps {
                 dir('docker_selenoid') {
                     bat '''
-                        docker wait prestashop_postinstall
+                        for /f "delims=" %%i in ('docker compose -f docker-compose.yaml -f docker-compose.ci.yaml ps -q prestashop_postinstall') do set CID=%%i
+                        docker wait %CID%
                     '''
                 }
             }
