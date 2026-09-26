@@ -104,7 +104,6 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: mysql_db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: admin
@@ -125,7 +124,6 @@ services:
 
   prestashop:
     image: prestashop/prestashop:8.1.5
-    container_name: prestashop
     restart: unless-stopped
     ports:
       - "8081:80"
@@ -163,7 +161,6 @@ services:
 
   prestashop_postinstall:
     image: alpine:3.19
-    container_name: prestashop_postinstall
     restart: "no"
     depends_on:
       prestashop:
