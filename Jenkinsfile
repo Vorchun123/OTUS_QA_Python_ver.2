@@ -1,0 +1,92 @@
+pipeline {
+    agent any
+    options {
+        timeout(time: 20, unit: 'MINUTES')
+    }
+    environment {
+    MYSQL_ROOT_PASSWORD  = credentials('prestashop-mysql-root-password')
+    ADMIN_PASSWD         = credentials('prestashop-admin-password')
+    COMPOSE_PROJECT_NAME = "otus-qa-${BUILD_NUMBER}"
+    PS_DOMAIN            = "localhost:8081"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Prepare') {
+            steps {
+                script {
+                    bat '''
+                        docker version
+                        docker compose version
+                        docker network create selenoid1 || exit 0
+                        docker network create selenoid2 || exit 0
+                    '''
+                }
+            }
+        }
+        stage('Build test image') {
+            steps {
+                dir('docker_selenoid') {
+                    bat '''
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml build tests
+                    '''
+                }
+            }
+        }
+        stage('Start infra') {
+            steps {
+                dir('docker_selenoid') {
+                    bat '''
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml up -d ^
+                            db prestashop prestashop_postinstall ^
+                            selenoid1 selenoid2 ggr ggr_ui selenoid_ui nginx
+                    '''
+                }
+            }
+        }
+        stage('Wait for PrestaShop') {
+            steps {
+                dir('docker_selenoid') {
+                    bat '''
+                        for /f "delims=" %%i in ('docker compose -f docker-compose.yaml -f docker-compose.ci.yaml ps -q prestashop_postinstall') do set CID=%%i
+                        docker wait %CID%
+                    '''
+                }
+            }
+        }
+        stage('Run tests') {
+            steps {
+                dir('docker_selenoid') {
+                    bat 'if exist reports rmdir /S /Q reports'
+                    bat 'mkdir reports'
+                    bat '''
+                        docker compose -f docker-compose.yaml -f docker-compose.ci.yaml ^
+                            run --rm tests
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            dir('docker_selenoid') {
+                bat '''
+                    docker compose -f docker-compose.yaml -f docker-compose.ci.yaml logs --no-color > reports\\compose.log 2>&1 || exit 0
+                '''
+            }
+            allure includeProperties: false,
+                   jdk: '',
+                   results: [[path: 'docker_selenoid/reports']]
+            archiveArtifacts artifacts: 'docker_selenoid/reports/**',
+                             allowEmptyArchive: true
+            dir('docker_selenoid') {
+                bat '''
+                    docker compose -f docker-compose.yaml -f docker-compose.ci.yaml down -v --remove-orphans || exit 0
+                '''
+            }
+        }
+    }
+}

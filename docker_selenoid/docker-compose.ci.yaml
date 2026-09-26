@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  selenoid1:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./browsers.json:/etc/selenoid/browsers.json:ro
+
+  selenoid2:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./browsers.json:/etc/selenoid/browsers.json:ro
+
+  ggr:
+    volumes:
+      - ./grid-router:/etc/grid-router:ro
+
+  ggr_ui:
+    volumes:
+      - ./grid-router/quota:/etc/grid-router/quota:ro
+
+  nginx:
+    volumes:
+      - ./nginx/selenoid.conf:/etc/nginx/conf.d/selenoid.conf:ro
+
+  phpmyadmin:
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: prestashop
+
+  prestashop:
+    environment:
+      DB_SERVER: db
+      DB_NAME: prestashop
+      DB_USER: root
+      DB_PASSWD: ${MYSQL_ROOT_PASSWORD}
+      DB_PREFIX: ps_
+      PS_INSTALL_AUTO: "1"
+      PS_LANGUAGE: "en"
+      PS_COUNTRY: "US"
+      PS_DEV_MODE: "1"
+      PS_DOMAIN: "${PS_DOMAIN:-localhost:8081}"
+      ADMIN_MAIL: "admin@example.com"
+      ADMIN_PASSWD: ${ADMIN_PASSWD}
+      PS_FOLDER_ADMIN: "administration"
+      PS_FOLDER_INSTALL: "install"
+
+  tests:
+    volumes:
+      - ./reports:/page_object_test/allure-results
+    environment:
+      SELENOID_URL: "http://ggr:4444/wd/hub"
+      BASE_URL: "http://prestashop:80"
+    depends_on:
+      prestashop:
+        condition: service_healthy
+      ggr:
+        condition: service_started
+    command: ["pytest", "--headless", "--alluredir=/page_object_test/allure-results"]
