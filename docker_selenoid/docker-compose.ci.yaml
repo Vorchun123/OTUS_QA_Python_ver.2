@@ -64,4 +64,4 @@ services:
         condition: service_healthy
       ggr:
         condition: service_started
-    command: ["pytest", "--headless", "--alluredir=/page_object_test/allure-results"]
+    command: ["pytest", "--alluredir=/page_object_test/allure-results"]
