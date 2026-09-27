@@ -121,6 +121,7 @@ services:
       - 1.1.1.1
     networks:
       - selenoid1
+      - selenoid2
 
   prestashop:
     image: prestashop/prestashop:8.1.5
@@ -152,6 +153,7 @@ services:
       - 1.1.1.1
     networks:
       - selenoid1
+      - selenoid2
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 10s
@@ -207,6 +209,7 @@ services:
         condition: service_healthy
     networks:
       - selenoid1
+      - selenoid2
     command: [ "pytest", "--headless", "--alluredir=/page_object_test/allure-results" ]
 
 networks:
