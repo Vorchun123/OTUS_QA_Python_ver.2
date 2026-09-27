@@ -47,4 +47,4 @@ RUN pip install -r requirements.txt
 
 COPY /page_object_test /page_object_test/
 
-CMD ["pytest"]
+CMD ["pytest", "--headless"]

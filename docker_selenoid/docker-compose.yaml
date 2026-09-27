@@ -207,7 +207,7 @@ services:
         condition: service_healthy
     networks:
       - selenoid1
-    command: [ "pytest",  "--alluredir=/page_object_test/allure-results" ]
+    command: [ "pytest", "--headless", "--alluredir=/page_object_test/allure-results" ]
 
 networks:
   selenoid1:
