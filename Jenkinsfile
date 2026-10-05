@@ -90,7 +90,7 @@ pipeline {
                     docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" run --rm ^
                         -e BROWSER=${params.BROWSER} ^
                         tests ^
-                        pytest ^
+                        pytest test_file^
                             --browser=${params.BROWSER} ^
                             --url=${params.BASE_URL} ^
                             ${params.HEADLESS ? '--headless' : ''} ^
