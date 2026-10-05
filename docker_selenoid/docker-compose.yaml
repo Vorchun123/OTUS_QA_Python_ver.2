@@ -202,8 +202,6 @@ services:
       context: ..
       dockerfile: Dockerfile
     container_name: tests
-    volumes:
-      - /mnt/d/Учеба/OTUS/OTUS_QA_Python_ver.2/page_object_test:/page_object_test
     depends_on:
       prestashop:
         condition: service_healthy
