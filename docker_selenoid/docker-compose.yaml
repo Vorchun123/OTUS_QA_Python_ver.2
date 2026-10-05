@@ -201,6 +201,11 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
+    volumes:
+      - ../logs:/page_object_test/logs
+      - ../screenshot:/page_object_test/screenshot
+      - ../reports:/page_object_test/reports
+      - ../allure-results:/page_object_test/allure-results
     container_name: tests
     depends_on:
       prestashop:

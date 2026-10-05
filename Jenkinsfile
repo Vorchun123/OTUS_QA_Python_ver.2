@@ -90,7 +90,6 @@ pipeline {
                     cd /d "${COMPOSE_DIR}"
                     docker compose -p ${COMPOSE_PROJECT} ^
                         -f "${COMPOSE_FILE}" ^
-                        -f "${COMPOSE_DIR}\\docker-compose.ci.yaml" ^
                     run --rm ^
                         -e BROWSER=${params.BROWSER} ^
                     tests ^
