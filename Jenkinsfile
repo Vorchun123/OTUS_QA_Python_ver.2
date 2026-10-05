@@ -118,5 +118,6 @@ post {
             cd /d "${COMPOSE_DIR}"
             docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" down -v --remove-orphans
         """
+        }
     }
 }
