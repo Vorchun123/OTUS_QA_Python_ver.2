@@ -23,12 +23,12 @@ def browser(request):
     base_url = request.config.getoption('url')
 
     logger = logging.getLogger(request.node.name)
-    logs = Path('../logs')
+    logs = Path('logs')
     logs.mkdir(exist_ok=True)
-    screenshot = Path('../screenshot')
+    screenshot = Path('screenshot')
     screenshot.mkdir(exist_ok=True)
 
-    file_handler = logging.FileHandler(f'logs/{request.node.name}.log', mode="w")
+    file_handler = logging.FileHandler(logs/f'{request.node.name}.log', mode="w")
     file_handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
     logger.addHandler(file_handler)
     logger.setLevel(level=log_level)
