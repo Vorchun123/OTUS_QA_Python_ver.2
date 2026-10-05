@@ -16,8 +16,8 @@ pipeline {
     }
 
     environment {
-        COMPOSE_DIR     = "${WORKSPACE}"
-        COMPOSE_FILE    = "${WORKSPACE}\\docker-compose.yaml"
+        COMPOSE_DIR     = "${WORKSPACE}\\docker_selenoid"
+        COMPOSE_FILE    = "${WORKSPACE}\\docker_selenoid\\docker-compose.yaml"
         COMPOSE_PROJECT = "otus_qa_${BUILD_NUMBER}"
     }
 
