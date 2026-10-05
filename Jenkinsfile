@@ -31,7 +31,11 @@ pipeline {
                 '''
             }
         }
-
+        stage('Debug workspace') {
+            steps {
+                bat 'dir /s /b C:\\Users\\User\\.jenkins\\workspace\\12'
+            }
+        }
         stage('Build test image') {
             steps {
                 bat """
