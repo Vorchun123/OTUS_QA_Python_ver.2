@@ -104,16 +104,19 @@ pipeline {
             }
         }
     }
+post {
+    always {
+        junit allowEmptyResults: true, testResults: 'reports/*.xml'
 
-    post {
-        always {
-            junit allowEmptyResults: true, testResults: 'reports/*.xml'
-            archiveArtifacts artifacts: 'logs/**/*.log, screenshot/**/*.png, reports/**/*.xml', allowEmptyArchive: true
+        allure includeProperties: false,
+               jdk: '',
+               results: [[path: 'allure-results']]
 
-            bat """
-                cd /d "${COMPOSE_DIR}"
-                docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" down -v --remove-orphans
-            """
-        }
+        archiveArtifacts artifacts: 'logs/**/*.log, screenshot/**/*.png, reports/**/*.xml, allure-results/**/*', allowEmptyArchive: true
+
+        bat """
+            cd /d "${COMPOSE_DIR}"
+            docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" down -v --remove-orphans
+        """
     }
 }
