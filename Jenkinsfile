@@ -78,7 +78,15 @@ pipeline {
                 """
             }
         }
-
+        stage('Debug tests image') {
+            steps {
+                bat """
+                    cd /d "${COMPOSE_DIR}"
+                    docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" run --rm tests ^
+                    sh -c "echo '=== /page_object_test ===' && ls -la /page_object_test && echo '=== find conftest ===' && find /page_object_test -name conftest.py && echo '=== find test_ ===' && find /page_object_test -name 'test_*.py'"
+                """
+            }
+        }
         stage('Run tests') {
             steps {
                 bat 'if not exist logs mkdir logs'
