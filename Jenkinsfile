@@ -31,11 +31,6 @@ pipeline {
                 '''
             }
         }
-        stage('Debug workspace') {
-            steps {
-                bat 'dir /s /b C:\\Users\\User\\.jenkins\\workspace\\12'
-            }
-        }
         stage('Build test image') {
             steps {
                 bat """
@@ -82,32 +77,30 @@ pipeline {
                 """
             }
         }
-        stage('Debug tests image') {
-            steps {
-                bat """
-                    cd /d "${COMPOSE_DIR}"
-                    docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" run --rm tests ^
-                    sh -c "echo '=== /page_object_test ===' && ls -la /page_object_test && echo '=== find conftest ===' && find /page_object_test -name conftest.py && echo '=== find test_ ===' && find /page_object_test -name 'test_*.py'"
-                """
-            }
-        }
         stage('Run tests') {
             steps {
-                bat 'if not exist logs mkdir logs'
-                bat 'if not exist screenshot mkdir screenshot'
-                bat 'if not exist reports mkdir reports'
+                bat """
+                    if not exist logs mkdir logs
+                    if not exist screenshot mkdir screenshot
+                    if not exist reports mkdir reports
+                    if not exist allure-results mkdir allure-results
+                """
 
                 bat """
                     cd /d "${COMPOSE_DIR}"
-                    docker compose -p ${COMPOSE_PROJECT} -f "${COMPOSE_FILE}" run --rm ^
+                    docker compose -p ${COMPOSE_PROJECT} ^
+                        -f "${COMPOSE_FILE}" ^
+                        -f "${COMPOSE_DIR}\\docker-compose.ci.yaml" ^
+                    run --rm ^
                         -e BROWSER=${params.BROWSER} ^
-                        tests ^
-                        pytest test_file^
-                            --browser=${params.BROWSER} ^
-                            --url=${params.BASE_URL} ^
-                            ${params.HEADLESS ? '--headless' : ''} ^
-                            --log_level=${params.LOG_LEVEL} ^
-                            --junitxml=reports/junit.xml
+                    tests ^
+                    pytest test_file ^
+                        --browser=${params.BROWSER} ^
+                        --url=${params.BASE_URL} ^
+                        ${params.HEADLESS ? '--headless' : ''} ^
+                        --log_level=${params.LOG_LEVEL} ^
+                        --junitxml=reports/junit.xml ^
+                        --alluredir=allure-results
                 """
             }
         }
