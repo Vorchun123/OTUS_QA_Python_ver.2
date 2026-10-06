@@ -28,7 +28,7 @@ def browser(request):
     screenshot = Path('screenshot')
     screenshot.mkdir(exist_ok=True)
 
-    file_handler = logging.FileHandler(f'logs/{request.node.name}.log', mode="w")
+    file_handler = logging.FileHandler(logs/f'{request.node.name}.log', mode="w")
     file_handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
     logger.addHandler(file_handler)
     logger.setLevel(level=log_level)
