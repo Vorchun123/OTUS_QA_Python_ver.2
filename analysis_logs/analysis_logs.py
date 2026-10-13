@@ -7,7 +7,7 @@ from pathlib import Path
 
 LOG_PATTERN = re.compile(
     r'^(?P<ip>\S+)\s+-\s+-\s+'
-    r'\[(?P<time>[^\]]+)\]\s+'
+    r'\[(?P<time>[^]]+)]\s+'
     r'"(?P<request>[^"]*)"\s+'
     r'(?P<status>\d{3})\s+'
     r'(?P<bytes>\S+)\s+'
@@ -54,10 +54,10 @@ def analyze_log_file(file_path: Path) -> dict:
         for line in f:
             if not line.strip():
                 continue
+            total_requests += 1
             parsed = parse_line(line)
             if parsed is None:
                 continue
-            total_requests += 1
             method_counter[parsed["method"]] += 1
             ip_counter[parsed["ip"]] += 1
             slow_requests.append({
@@ -68,13 +68,8 @@ def analyze_log_file(file_path: Path) -> dict:
                 "time": parsed["time"]})
 
     methods_stats = {m: method_counter.get(m, 0) for m in HTTP_METHODS}
-
-    top_ips = [
-        {"ip": ip, "requests": count}
-        for ip, count in ip_counter.most_common(3)]
-
-    top_slow = sorted(
-        slow_requests, key=lambda x: x["duration_ms"], reverse=True)[:3]
+    top_ips = [{"ip": ip, "requests": count} for ip, count in ip_counter.most_common(3)]
+    top_slow = sorted(slow_requests, key=lambda x: x["duration_ms"], reverse=True)[:3]
 
     return {
         "file": str(file_path),
@@ -127,20 +122,17 @@ def collect_log_files(path: Path):
     if path.is_file():
         return [path]
     if path.is_dir():
-        return sorted(
-            p for p in path.iterdir() if p.is_file() and p.suffix.lower() == ".log")
+        return sorted(p for p in path.iterdir() if p.is_file() and p.suffix.lower() == ".log")
     return []
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Анализ логов веб-сервера Apache (access.log).")
-    parser.add_argument(
-        "-p", "--path",
-        type=str,
-        default=r"D:\Учеба\Python\Log",
-        help=r"Путь к директории с логами или к конкретному файлу "
-             r"(по умолчанию: D:\Учеба\Python\Log)")
+    parser = argparse.ArgumentParser(description="Анализ логов веб-сервера Apache (access.log).")
+    parser.add_argument("-p", "--path",
+                        type=str,
+                        default=r"D:\Учеба\Python\Log",
+                        help=r"Путь к директории с логами или к конкретному файлу "
+                             r"(по умолчанию: D:\Учеба\Python\Log)")
     parser.add_argument("-o", "--output",
                         type=str,
                         default=None,
@@ -153,9 +145,7 @@ def main():
         sys.exit(1)
     log_files = collect_log_files(target_path)
     if not log_files:
-        print(
-            f"[ПРЕДУПРЕЖДЕНИЕ] В {target_path} не найдено лог-файлов (*.log)",
-            file=sys.stderr)
+        print(f"[ПРЕДУПРЕЖДЕНИЕ] В {target_path} не найдено лог-файлов (*.log)", file=sys.stderr)
         sys.exit(0)
     output_dir = Path(args.output) if args.output else (
         target_path if target_path.is_dir() else target_path.parent)
